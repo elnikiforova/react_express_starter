@@ -8,7 +8,7 @@ const getRandom = (number) => {
   return Math.floor(Math.random() * number);
 }
 
-router.get('/', cors(), async (req, res) => {
+router.get('/api/customers', cors(), async (req, res) => {
   const data = { message: 'router.get OK' }
 
   fonds = await Fond.find();
