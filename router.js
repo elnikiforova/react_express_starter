@@ -3,22 +3,23 @@ const cors = require('cors');
 const router = express.Router();
 const Fond = require('./models/Fond');
 
-router.get('/', cors(), (req, res) => {
+// get random number from 0 to number - 1
+const getRandom = (number) => {
+  return Math.floor(Math.random() * number);
+}
+
+router.get('/', cors(), async (req, res) => {
   const data = { message: 'router.get OK' }
-  res.json(data);
-});
 
-router.post('/', cors(), async (req, res) => {
-  try {
-    const myRequest = await req.body;
-    console.log('прилетело с клиента:', myRequest);
+  fonds = await Fond.find();
 
-    const fonds = await Fond.find();
-    res.json(fonds);
-  }
-  catch (err) {
-    console.log(err);
-  }
+  const threeFonds = [
+    fonds[getRandom(fonds.length)],
+    fonds[getRandom(fonds.length)],
+    fonds[getRandom(fonds.length)],
+  ];
+
+  res.json(threeFonds);
 });
 
 module.exports = router;

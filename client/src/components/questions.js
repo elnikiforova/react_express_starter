@@ -9,17 +9,23 @@ class Questions extends Component {
       questions: [
         "Вопрос 1. Является ли для вас важным помогать благотворительным организациям конкретного региона?",
         "Вопрос 2. Если представить, что вам необходимо сразиться с чудищем, то какая философия воина вам ближе?",
-        "Вопрос 3. Кому вы симпатизируете больше, популярным и широко известным организациям или тем организациям, которые не так на слуху и и не получают внимания со стороны федеральных СМИ, несмотря на то, что делают хорошую работу?"],
+        "Вопрос 3. Что из нижеследующего наиболее актуально для вас на данный период жизни?",
+        "Вопрос 4. Как вы считаете, что из нижеперечисленного наиболее важно для благополучия общества?",
+        "Вопрос 5. Какое направление помощи для вас наиболее приоритетно?",
+        "Вопрос 6. Вы выбрали помощь конкретным людям и социальным группам как приоритетную для вас. При этом существуют социальные группы, которым помогают многие организации и наоборот, группы, которым помогает очень ограниченное количество организаций. Кому бы вы предпочли помочь?"
+      ],
       options: [
         [" Да, для меня важно помогать организациям своего региона",
-          " Нет, мне более важна тематика, которой занимается организация",
-          " Хочу помогать региональным организациям, которые получают сейчас меньше всего поддержки"],
+          " Нет, мне более важна тематика, которой занимается организация"],
         [" Пришел, увидел, победил. Потому что для меня важно видеть результат здесь и сейчас",
-          "  Я терпеливый человек, могу и подождать. Как сказал Лао Дзы: сядь на берегу реки, и вскоре ты увидишь, как мимо тебя проплывает труп твоего врага.",
-          " ? промежуточный вариант"],
-        [" Пожалуй, я за “народный выбор”, чем организация известнее, тем больше доверия она вызывает",
-          " Все равно мы выбираем только из проверенных фондов, поэтому я с удовольствием поддержку организацию, которая совсем не снискала медийной славы, но при этом хорошо делает свою работу",
-          " А можно выбрать середнячка?"]],
+          "  Я терпеливый человек, могу и подождать. Как сказал Лао Дзы: сядь на берегу реки, и вскоре ты увидишь, как мимо тебя проплывает труп твоего врага."],
+        [" Безопасная среда", " Хорошее здоровье", " Достойный уровень жизни", " Правовое государство", " Хорошие отношения с людьми",
+          " Саморазвитие", " Научный прогресс", " Забота о природе", " Почитание традиций"],
+        [" Безопасная среда", " Хорошее здоровье", " Достойный уровень жизни", " Правовое государство", " Хорошие отношения с людьми",
+          " Саморазвитие", " Научный прогресс", " Забота о природе", " Почитание традиций"],
+        [" Помощь конкретным людям и социальным группам", " Развитие общества в целом", " Помощь животным", " Защита экологии"],
+        [" “Популярные” группы благополучателей", " “Непопулярные” группы благополучателей"],
+      ],
       counter: 0,
       lastButton: false,
       showFirstPage: true,
@@ -82,6 +88,7 @@ class Questions extends Component {
       .then(res => res.json())
       .then(data => {
         console.log('data fetched:', data);
+        this.setState({ fonds: data });
       });
   }
 
@@ -106,30 +113,31 @@ class Questions extends Component {
   }
 
   showResults() {
-    fetch('/api/customers', {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ message: 'POST OK' })
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log('data fetched:', data);
-      });
 
     return (
       <div>
-        <h2>Results</h2>
-        <h1>{
-          this.state.choises.length === 0 ?
-            "Выводим рандом" :
-            this.state.choises}
-        </h1>
+        <p className="qu-intro-result">Результат теста</p>
+        <div className="all-card-wrapper">
+          <div className="card-wrapper">
+            <img src={this.state.fonds[0].logo} className="logo-help" alt="logo"></img>
+            <p className="org-title" >{this.state.fonds[0].short_name_visible}</p>
+            <p className="org-city">{this.state.fonds[0].city}</p>
+          </div>
+          <div className="card-wrapper">
+            <img src={this.state.fonds[1].logo} className="logo-help" alt="logo"></img>
+            <p className="org-title">{this.state.fonds[1].short_name_visible}</p>
+            <p className="org-city">{this.state.fonds[1].city}</p>
+          </div>
+          <div className="card-wrapper">
+            <img src={this.state.fonds[2].logo} className="logo-help" alt="logo"></img>
+            <p className="org-title">{this.state.fonds[2].short_name_visible}</p>
+            <p className="org-city">{this.state.fonds[2].city}</p>
+          </div>
+        </div>
       </div>
     )
   }
+
 
   render() {
     const showLastButton = (this.state.counter === this.state.options.length - 1);
@@ -156,7 +164,7 @@ class Questions extends Component {
                   {
                     showLastButton ?
                       <button className="btn main-button" onClick={this.handleClickLastButton}>
-                        FINISH!
+                        К результатам!
                     </button> :
                       <div className="buttons-wrapper">
                         <button className="btn main-button" onClick={this.handleClickNextButton}>
