@@ -17,6 +17,33 @@ li {
   display: flex;
   flex-direction: row;
   justify-content: center;
+
+}
+
+.all-card-wrapper {
+  padding: 2em 0;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card-wrapper {
+  padding: 3em 0;
+  width: 210px;
+  margin: 1em;
+  background: #FFFFFF;
+}
+
+.org-title {
+  padding-top: 1em;
+  font-family: "FuturaDemiC";
+  font-size: large;
+}
+
+.org-city {
+  font-family: "FuturaBookC";
 }
 
 .qu-answ-wrapper {
@@ -45,6 +72,18 @@ li {
   font-weight: normal;
   max-width: 100%;
   font-size: 20px;
+  line-height: 23px;
+  color: #000000;
+}
+
+.qu-intro-result {
+  padding-top: 2em;
+  font-family: "FuturaDemiC";
+  text-align: center;
+  font-style: normal;
+  font-weight: normal;
+  max-width: 100%;
+  font-size: 30px;
   line-height: 23px;
   color: #000000;
 }
