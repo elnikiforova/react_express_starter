@@ -5,7 +5,7 @@ class Questions extends Component {
   constructor() {
     super();
     this.state = {
-      customers: [],
+      fonds: [],
       questions: [
         "Вопрос 1. Является ли для вас важным помогать благотворительным организациям конкретного региона?",
         "Вопрос 2. Если представить, что вам необходимо сразиться с чудищем, то какая философия воина вам ближе?",
@@ -79,7 +79,9 @@ class Questions extends Component {
   componentDidMount() {
     fetch('/api/customers')
       .then(res => res.json())
-      .then(customers => this.setState({ customers }, () => console.log('Customers fetched...', customers)));
+      .then(data => {
+        console.log('data fetched:', data);
+      });
   }
 
   doShowFirstPage()
@@ -101,6 +103,19 @@ class Questions extends Component {
   }
 
   showResults() {
+    fetch('/api/customers', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message: 'POST OK' })
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log('data fetched:', data);
+      });
+
     return (
       <div>
         <h2>Results</h2>
