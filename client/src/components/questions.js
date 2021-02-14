@@ -34,6 +34,7 @@ class Questions extends Component {
     const values = document.getElementsByName(field);
     for (var i = 0; i < values.length; i++) {
       if (values[i].checked) {
+        // eslint-disable-next-line
         return parseInt(values[i].value) + 1;
       }
     }
@@ -64,8 +65,8 @@ class Questions extends Component {
     });
   }
 
-  skipQuestion(){
-      this.setState(({ choises, counter }) => {
+  skipQuestion() {
+    this.setState(({ choises, counter }) => {
       const copyChoises = choises;
       copyChoises.push(-1);
       counter++;
@@ -84,21 +85,23 @@ class Questions extends Component {
       });
   }
 
-  doShowFirstPage()
-  {
-    return(
-     <div className="all-wrapper">
-      <p><h1>Как определиться кому помогать?</h1></p><br />
-      <p><h3>Выбрать кому помогать может быть сложно, ведь существует много различных проблем, которые мы стремимся решить, много вариантов получателей помощи и много организаций. Мы сделали этот тест, чтобы помочь вам в этом. 
-        Если вопрос покажется вам слишком сложным, вы всегда можете нажать “пропустить”. После завершения теста мы предложим вам несколько организаций исходя из ваших ответов. Все они проверены и смогут эффективно распоряжаться вашими средствами.
-      </h3></p>
-      <button className="btn main-button" onClick={() => this.setState({ showFirstPage:false })}>
-        Пройти тест
-      </button>
-      <button className="btn main-button" onClick={() => this.setState({ lastButton:true, showFirstPage:false })}>
-        Мне повезёт!
-      </button>
-     </div>
+  doShowFirstPage() {
+    return (
+      <div className="all-wrapper">
+        <div className="qu-answ-wrapper">
+          <p className="qu-intro">Как определиться кому помогать?</p>
+          <p className="answ-intro">Выбрать кому помогать может быть сложно, ведь существует много различных проблем, которые мы стремимся решить, много вариантов получателей помощи и много организаций. Мы сделали этот тест, чтобы помочь вам в этом.</p>
+          <p className="answ-intro">Если вопрос покажется вам слишком сложным, вы всегда можете нажать “пропустить”. После завершения теста мы предложим вам несколько организаций исходя из ваших ответов. Все они проверены и смогут эффективно распоряжаться вашими средствами.</p>
+          <div className="buttons-wrapper">
+            <button className="btn main-button" onClick={() => this.setState({ showFirstPage: false })}>
+              Пройти тест
+            </button>
+            <button className="btn side-button" onClick={() => this.setState({ lastButton: true, showFirstPage: false })}>
+              Мне повезёт!
+            </button>
+          </div>
+        </div>
+      </div>
     )
   }
 
@@ -120,8 +123,8 @@ class Questions extends Component {
       <div>
         <h2>Results</h2>
         <h1>{
-            this.state.choises.length === 0 ?
-            "Выводим рандом" : 
+          this.state.choises.length === 0 ?
+            "Выводим рандом" :
             this.state.choises}
         </h1>
       </div>
@@ -131,44 +134,44 @@ class Questions extends Component {
   render() {
     const showLastButton = (this.state.counter === this.state.options.length - 1);
     return (
-     this.state.showFirstPage ?
+      this.state.showFirstPage ?
         this.doShowFirstPage()
         :
         <div className="all-wrapper">
-        {
-          this.state.lastButton ?
-            <div>
-              {this.showResults()}
-            </div> :
-            <div className="qu-answ-wrapper">
-              <p className="qu">{this.state.questions[this.state.counter]}</p>
-              {this.state.options[this.state.counter].map((question, id) =>
-                <p className="answ">
-                  <label htmlFor="dzen"></label>
-                  <input name="dzen" type="radio" value={id} />
-                  {question}</p>
-              )}
-
+          {
+            this.state.lastButton ?
               <div>
-              {
-                showLastButton ?
-                  <button className="btn main-button" onClick={this.handleClickLastButton}>
-                    FINISH!
-                    </button> :
-                  <div>
-                  <button className="btn main-button" onClick={this.handleClickNextButton}>
-                    Следующий вопрос {this.state.counter + 1} / {this.state.options.length}
-                  </button>
-                  <button className="btn main-button" onClick={this.skipQuestion}>
-                    Пропустить вопрос
-                  </button>
-                  </div>
-              }
-              </div>
-            </div>
+                {this.showResults()}
+              </div> :
+              <div className="qu-answ-wrapper">
+                <p className="qu">{this.state.questions[this.state.counter]}</p>
+                {this.state.options[this.state.counter].map((question, id) =>
+                  <p className="answ">
+                    <label htmlFor="dzen"></label>
+                    <input name="dzen" type="radio" value={id} />
+                    {question}</p>
+                )}
 
-        }
-      </div>
+                <div className="buttons-wrapper">
+                  {
+                    showLastButton ?
+                      <button className="btn main-button" onClick={this.handleClickLastButton}>
+                        FINISH!
+                    </button> :
+                      <div className="buttons-wrapper">
+                        <button className="btn main-button" onClick={this.handleClickNextButton}>
+                          Следующий вопрос {this.state.counter + 1} / {this.state.options.length}
+                        </button>
+                        <button className="btn side-button" onClick={this.skipQuestion}>
+                          Пропустить вопрос
+                        </button>
+                      </div>
+                  }
+                </div>
+              </div>
+
+          }
+        </div>
     );
   }
 }

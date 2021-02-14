@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import logoHelp from './logo-help.png';
 import logo from './logo.svg';
 import './App.css';
 import Questions from './components/questions';
@@ -9,10 +10,10 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Фонд Нужна Помощь</h1>
+          <img src={logoHelp} className="logo-help" alt="logo-help" />
         </header>
         <Questions />
-      </div>
+      </div >
     );
   }
 }
